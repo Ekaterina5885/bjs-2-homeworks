@@ -24,13 +24,13 @@ function cachingDecoratorNew(func) {
 
 function debounceDecoratorNew(func, ms) {
   let timeout;
-  let checkFunc = true; 
+  let flag = true; 
   return function(...args) {
     clearTimeout(timeout)
-   if(checkFunc === true) { 
+   if(flag === true) { 
    func(...args);
   }
-  checkFunc = false;
+  flag = false;
   timeout = setTimeout(() => { 
   func.apply(this, args)
   }, ms);
@@ -41,15 +41,15 @@ function debounceDecoratorNew(func, ms) {
 
 function debounceDecorator2(func) {
   let timeout;
-  let checkFunc = true;
+  let flag = true;
   wrapper.count = 0;
   function wrapper(...args) {
     clearTimeout(timeout)
-    if(checkFunc === true) { 
+    if(flag === true) { 
     func(...args);
     wrapper.count += 1;
    }
-   checkFunc = false;
+   flag = false;
    timeout = setTimeout(() => { 
    func.apply(this, args);
    }, ms);
