@@ -27,31 +27,34 @@ function debounceDecoratorNew(func, ms) {
   let flag = true; 
   return function(...args) {
     clearTimeout(timeout)
-   if(flag === true) { 
-   func(...args);
+    if (flag === true) { 
+     func.apply(this, args);
   }
   flag = false;
   timeout = setTimeout(() => { 
-  func.apply(this, args)
+  func.apply(this, args);
+  flag = true;
   }, ms);
   }
 };
   
 // Задача 3. Усовершенствуйте debounceDecoratorNew;
 
-function debounceDecorator2(func) {
+function debounceDecorator2(func, ms) {
   let timeout;
   let flag = true;
   wrapper.count = 0;
   function wrapper(...args) {
     clearTimeout(timeout)
-    if(flag === true) { 
-    func(...args);
-    wrapper.count += 1;
+    if (flag === true) { 
+     func.apply(this, args);
+     wrapper.count += 1;
    }
    flag = false;
    timeout = setTimeout(() => { 
-   func.apply(this, args);
+     func.apply(this, args);
+     wrapper.count += 1;
+     flag = true;
    }, ms);
   }
   return wrapper;
